@@ -1,14 +1,9 @@
+use std::collections::HashMap;
+
 advent_of_code::solution!(1);
 
 pub fn part_one(input: &str) -> Option<u32> {
-    let mut left = vec![];
-    let mut right = vec![];
-
-    for line in input.lines() {
-        let mut items = line.split_ascii_whitespace();
-        left.push(items.next().unwrap().parse::<u32>().unwrap());
-        right.push(items.next().unwrap().parse::<u32>().unwrap());
-    }
+    let (mut left, mut right) = parse_lists(input);
 
     left.sort();
     right.sort();
@@ -20,7 +15,35 @@ pub fn part_one(input: &str) -> Option<u32> {
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    None
+    let (left, right) = parse_lists(input);
+
+    // Add left values as keys to a hashmap
+    let mut map = HashMap::new();
+    for l in left {
+        map.insert(l, 0);
+    }
+    // If the right value is in the map, increment the value
+    for r in right {
+        if let Some(v) = map.get_mut(&r) {
+            *v += 1;
+        }
+    }
+    // Multiply the keys by their values and sum them
+    let sum = map.iter().map(|(k, v)| k * v).sum::<u32>();
+    Some(sum)
+}
+
+fn parse_lists(input: &str) -> (Vec<u32>, Vec<u32>) {
+    let mut left = vec![];
+    let mut right = vec![];
+
+    for line in input.lines() {
+        let mut items = line.split_ascii_whitespace();
+        left.push(items.next().unwrap().parse::<u32>().unwrap());
+        right.push(items.next().unwrap().parse::<u32>().unwrap());
+    }
+
+    (left, right)
 }
 
 #[cfg(test)]
@@ -30,12 +53,13 @@ mod tests {
     #[test]
     fn test_part_one() {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_ne!(result, None);
+        assert!(result.is_some());
     }
 
     #[test]
     fn test_part_two() {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+        //assert the result is an integer
+        assert!(result.is_some());
     }
 }
