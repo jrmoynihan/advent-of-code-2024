@@ -60,7 +60,11 @@ mod tests {
 
     #[test]
     fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert!(result.is_some());
+        let result_one = part_one(&advent_of_code::template::read_file("examples", DAY));
+        let result_two = part_two(&advent_of_code::template::read_file("examples", DAY));
+        assert!(result_one.is_some());
+        assert!(result_two.is_some());
+        // The result of part one should be less than or equal to the result of part two
+        assert!(result_one.unwrap() <= result_two.unwrap());
     }
 }
