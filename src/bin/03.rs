@@ -14,7 +14,7 @@ use nom::{
 #[derive(Debug, Clone, Copy)]
 enum Instruction {
     Mul(u32, u32),
-    Add(u32, u32),
+    // Add(u32, u32),
     Do,
     Dont,
 }
@@ -53,13 +53,13 @@ fn execute(instructions: &[Instruction]) -> Option<u32> {
                     (should_process, sum)
                 }
             }
-            Instruction::Add(a, b) => {
-                if should_process == ShouldProcess::Do {
-                    (should_process, sum + a + b)
-                } else {
-                    (should_process, sum)
-                }
-            }
+            // Instruction::Add(a, b) => {
+            //     if should_process == ShouldProcess::Do {
+            //         (should_process, sum + a + b)
+            //     } else {
+            //         (should_process, sum)
+            //     }
+            // }
             Instruction::Do => (ShouldProcess::Do, sum),
             Instruction::Dont => (ShouldProcess::Dont, sum),
         },
@@ -71,7 +71,6 @@ pub fn part_one(input: &str) -> Option<u32> {
     let (_, instructions) = parse(input)
         .map_err(|e| miette!("parse failed! {}", e))
         .ok()?;
-    dbg!(&instructions);
     execute(&instructions)
 }
 
@@ -79,7 +78,6 @@ pub fn part_two(input: &str) -> Option<u32> {
     let (_, instructions) = parse(input)
         .map_err(|e| miette!("parse failed! {}", e))
         .ok()?;
-    dbg!(&instructions);
     execute(&instructions)
 }
 
@@ -100,6 +98,6 @@ mod tests {
         let result = part_two(&advent_of_code::template::read_file_part(
             "examples", DAY, 2,
         ));
-        assert_eq!(result, Some(48));
+        assert_eq!(result, Some(9));
     }
 }
