@@ -113,7 +113,7 @@ pub fn part_two(input: &str) -> Option<u32> {
             line.iter().enumerate().filter_map(
                 move |(x, c)| {
                     if c == &'A' {
-                        Some((x, y, c))
+                        Some((x, y))
                     } else {
                         None
                     }
@@ -122,7 +122,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         })
         .collect_vec();
     let mut total_mas_count = 0;
-    'a_coords: for (x, y, _) in a_coords {
+    'a_coords: for (x, y) in a_coords {
         // Get all neighboring coords to each 'A'
         let neighbors = directions
             .iter()
