@@ -88,13 +88,11 @@ pub fn part_one(input: &str) -> Option<u32> {
                         && sy >= 0
                         && sx < grid[0].len() as isize
                         && sy < grid.len() as isize
+                        && grid[my as usize][mx as usize] == 'M'
+                        && grid[ay as usize][ax as usize] == 'A'
+                        && grid[sy as usize][sx as usize] == 'S'
                     {
-                        if grid[my as usize][mx as usize] == 'M'
-                            && grid[ay as usize][ax as usize] == 'A'
-                            && grid[sy as usize][sx as usize] == 'S'
-                        {
-                            count += 1;
-                        }
+                        count += 1;
                     }
                 }
             }
@@ -148,14 +146,16 @@ pub fn part_two(input: &str) -> Option<u32> {
                         || d == &Direction::SouthEast)
                 {
                     let (sx, sy) = offset_coord((mx, my), &d.opposite(), 2);
-                    if sx >= 0 && sy >= 0 && sx < grid[0].len() as isize && sy < grid.len() as isize
+                    if sx >= 0
+                        && sy >= 0
+                        && sx < grid[0].len() as isize
+                        && sy < grid.len() as isize
+                        && grid[sy as usize][sx as usize] == 'S'
                     {
-                        if grid[sy as usize][sx as usize] == 'S' {
-                            neighbor_mas_count += 1;
-                            if neighbor_mas_count >= 2 {
-                                total_mas_count += 1;
-                                continue 'a_coords;
-                            }
+                        neighbor_mas_count += 1;
+                        if neighbor_mas_count >= 2 {
+                            total_mas_count += 1;
+                            continue 'a_coords;
                         }
                     }
                 }
