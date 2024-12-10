@@ -78,10 +78,9 @@ pub fn part_two(input: &str) -> Option<u32> {
     {
         let middle_page_sum = updates
             .iter()
-            .map(|update| {
+            .inspect(|&update| {
                 #[cfg(debug_assertions)]
                 dbg!("Checking update:", update);
-                update
             })
             .filter(|update| {
                 let invalid = !is_valid_order(update, &rules);
