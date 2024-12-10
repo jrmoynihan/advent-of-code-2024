@@ -1,7 +1,4 @@
-use std::{
-    collections::HashSet,
-    ops::{Add, Index},
-};
+use std::{collections::HashSet, ops::Add};
 
 advent_of_code::solution!(6);
 
