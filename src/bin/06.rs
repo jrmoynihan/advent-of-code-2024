@@ -91,7 +91,7 @@ impl State {
                 direction: Direction::North,
             }]),
             distinct_obstacles: HashSet::new(),
-            next_location: start_location.clone(),
+            next_location: start_location,
             current_location: start_location,
         }
     }
@@ -107,11 +107,11 @@ impl State {
     }
     fn is_next_cell_beyond_grid(&mut self) -> bool {
         self.next_location = self.current_location.next_step();
-        let beyond = (self.next_location.coord.x as isize) < 0
-            || (self.next_location.coord.y as isize) < 0
-            || (self.next_location.coord.x as isize) >= self.grid[0].len() as isize
-            || (self.next_location.coord.y as isize) >= self.grid.len() as isize;
-        beyond
+        
+        self.next_location.coord.x < 0
+            || self.next_location.coord.y < 0
+            || self.next_location.coord.x >= self.grid[0].len() as isize
+            || self.next_location.coord.y >= self.grid.len() as isize
     }
 
     fn traverse(&mut self) -> bool {
@@ -196,7 +196,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         coord: find_start(&grid).unwrap(),
         direction: Direction::North,
     };
-    let mut state = State::new(grid, current_location.clone());
+    let mut state = State::new(grid, current_location);
     state.traverse();
     // Make a copy of the distinct positions
     let mut locations: Vec<Location> = state.distinct_traveled_locations.iter().cloned().collect();
