@@ -107,7 +107,7 @@ impl State {
     }
     fn is_next_cell_beyond_grid(&mut self) -> bool {
         self.next_location = self.current_location.next_step();
-        
+
         self.next_location.coord.x < 0
             || self.next_location.coord.y < 0
             || self.next_location.coord.x >= self.grid[0].len() as isize
@@ -178,7 +178,6 @@ pub fn part_one(input: &str) -> Option<u32> {
         coord: find_start(&grid).unwrap(),
         direction: Direction::North,
     };
-    println!("{:?}", current_location);
     let mut state = State::new(grid, current_location);
     state.traverse();
     // Filter to a unique set of *coordinates* in the distinct_locations (irrespective of direction facing while traversing)
@@ -210,10 +209,6 @@ pub fn part_two(input: &str) -> Option<u32> {
     // Sort the positions
     locations.sort_by(|a, b| a.coord.x.cmp(&b.coord.x).then(a.coord.y.cmp(&b.coord.y)));
 
-    // for (i, loc) in locations.iter().enumerate() {
-    //     println!("{}: {:?}", i, loc);
-    // }
-
     let mut looped_locations: HashSet<Coord> = HashSet::new();
     for location in &locations {
         state.reset();
@@ -224,9 +219,6 @@ pub fn part_two(input: &str) -> Option<u32> {
             looped_locations.insert(location.coord);
         }
     }
-    // for (i, loc) in looped_locations.iter().enumerate() {
-    //     println!("looped - {}: {:?}", i, loc);
-    // }
     Some(looped_locations.len() as u32)
 }
 
